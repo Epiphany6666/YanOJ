@@ -1,5 +1,5 @@
 <template>
-  <a-row id="globalHeader" align="center" style="margin-bottom: 16px">
+  <a-row id="globalHeader" align="center">
     <a-col flex="auto">
       <a-menu
         mode="horizontal"
