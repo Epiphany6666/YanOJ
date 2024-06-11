@@ -16,7 +16,7 @@
             <div class="title">OJ</div>
           </div>
         </a-menu-item>
-        <a-menu-item v-for="item in routes" :key="item.path">
+        <a-menu-item v-for="item in visibleRoutes" :key="item.path">
           {{ item.name }}
         </a-menu-item>
       </a-menu>
@@ -34,7 +34,15 @@ import { ref } from "vue";
 import { useStore } from "vuex";
 
 const router = useRouter();
-const route = useRoute();
+
+// 展示在菜单的路由数组
+const visibleRoutes = routes.filter((item) => {
+  if (item.meta?.hideInMenu) {
+    return false;
+  }
+  //todo 根据权限过滤菜单
+  return true;
+});
 
 // 默认主页
 const selectedKeys = ref(["/"]);
