@@ -30,18 +30,26 @@
 <script setup lang="ts">
 import { routes } from "../router/routes";
 import { useRoute, useRouter } from "vue-router";
-import { ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useStore } from "vuex";
+import checkAccess from "@/access/checkAccess";
+import ACCESS_ENUM from "@/access/accessEnum";
 
 const router = useRouter();
+const store = useStore();
 
 // 展示在菜单的路由数组
-const visibleRoutes = routes.filter((item) => {
-  if (item.meta?.hideInMenu) {
-    return false;
-  }
-  //todo 根据权限过滤菜单
-  return true;
+const visibleRoutes = computed(() => {
+  return routes.filter((item) => {
+    if (item.meta?.hideInMenu) {
+      return false;
+    }
+    //todo 根据权限过滤菜单
+    if (!checkAccess(store.state.user.loginUser, item.meta?.access as string)) {
+      return false;
+    }
+    return true;
+  });
 });
 
 // 默认主页
@@ -53,7 +61,10 @@ router.afterEach((to, from, failure) => {
 });
 
 setTimeout(() => {
-  store.dispatch("user/getLoginUser", { userName: "洛言", role: "admin" });
+  store.dispatch("user/getLoginUser", {
+    userName: "洛言",
+    userRole: ACCESS_ENUM.ADMIN,
+  });
 }, 3000);
 
 const doMenuClick = (key: string) => {
@@ -61,9 +72,6 @@ const doMenuClick = (key: string) => {
     path: key,
   });
 };
-
-const store = useStore();
-// console.log(store.state.user.loginUser);
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
