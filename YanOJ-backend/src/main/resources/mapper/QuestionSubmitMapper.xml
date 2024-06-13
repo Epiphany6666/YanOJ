@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yupi.yanoj.mapper.QuestionSubmitMapper">
+<mapper namespace="com.luoyan.yanoj.mapper.QuestionSubmitMapper">
 
-    <resultMap id="BaseResultMap" type="com.yupi.yanoj.model.entity.QuestionSubmit">
+    <resultMap id="BaseResultMap" type="com.luoyan.yanoj.model.entity.QuestionSubmit">
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="language" column="language" jdbcType="VARCHAR"/>
             <result property="code" column="code" jdbcType="VARCHAR"/>
