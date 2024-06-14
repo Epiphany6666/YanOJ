@@ -140,7 +140,7 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question>
         if (CollectionUtils.isEmpty(questionList)) {
             return questionVOPage;
         }
-        // 1. 关联查询用户信息
+        // 1. 关联查询用户信息。如果数据量多，一次全部查询出来要比差多次效率高很多
         Set<Long> userIdSet = questionList.stream().map(Question::getUserId).collect(Collectors.toSet());
         Map<Long, List<User>> userIdUserListMap = userService.listByIds(userIdSet).stream()
                 .collect(Collectors.groupingBy(User::getId));

@@ -29,13 +29,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
-* @author 52837
-* @description 针对表【question_submit(题目提交)】的数据库操作Service实现
-* @createDate 2024-06-13 08:12:38
-*/
+ * @author 52837
+ * @description 针对表【question_submit(题目提交)】的数据库操作Service实现
+ * @createDate 2024-06-13 08:12:38
+ */
 @Service
 public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper, QuestionSubmit>
-    implements QuestionSubmitService{
+        implements QuestionSubmitService {
     @Resource
     private QuestionService questionService;
 
@@ -75,7 +75,7 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         questionSubmit.setStatus(QuestionSubmitStatusEnum.WAITING.getValue());
         questionSubmit.setJudgeInfo("{}");
         boolean save = this.save(questionSubmit);
-        if (!save){
+        if (!save) {
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "数据插入失败");
         }
         Long questionSubmitId = questionSubmit.getId();
@@ -118,10 +118,8 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
         QuestionSubmitVO questionSubmitVO = QuestionSubmitVO.objToVo(questionSubmit);
         // 脱敏：仅本人和管理员能看见自己（提交 userId 和登录用户 id 不同）提交的代码
         long userId = loginUser.getId();
-        // 处理脱敏
-        if (userId != questionSubmit.getUserId() && !userService.isAdmin(loginUser)) {
-            questionSubmitVO.setCode(null);
-        }
+        // 处理脱敏  && !userService.isAdmin(loginUser)) {
+        questionSubmitVO.setCode(null);
         return questionSubmitVO;
     }
 
